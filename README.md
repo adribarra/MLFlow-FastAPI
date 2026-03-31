@@ -21,3 +21,45 @@ En este Jupyter Notebook está el EDA que realicé para revisar su estructura y 
 ## Paso 0
 Esta práctica asume que ya se tiene instalado WSL2 con Ubuntu y Miniconda. Si no se han completado esos pasos, en [este repositorio](github.com/adribarra/MLOpsMioti) están las instrucciones 
 
+Una vez completado los pasos anteriores, inicializamos nuestro ambiente virtual:
+```
+conda activate production_mlops
+```
+Clonamos el repositorio y creamos una estructura mínima
+```
+git clone https://github.com/adribarra/MLFlow-FastAPI.git
+cd MLFlow-FastAPI
+mkdir -p data src notebooks
+```
+
+Creamos el archivo de gitignore y agregamos las siguientes lineas para que no se añadan todos los archivos al repositorio:
+```
+# Entornos virtuales
+venv/
+.mlops/
+
+# Cachés de Python
+__pycache__/
+*.py[cod]
+
+# Datos y Modelos (serán gestionados por DVC)
+data/
+models/
+
+# MLflow local
+mlruns/
+mlartifacts/
+
+# Secretos
+.env
+/model.pkl
+```
+
+Inicializar DVC:
+```
+dvc init
+git add .dvc .gitignore
+git commit -m "init dvc"
+git push
+```
+

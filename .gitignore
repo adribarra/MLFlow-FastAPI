@@ -7,7 +7,8 @@ __pycache__/
 *.py[cod]
 
 # Datos (gestionado por DVC)
-data/
+models/.pkl
+models/.joblib
 
 # MLflow local
 mlruns/

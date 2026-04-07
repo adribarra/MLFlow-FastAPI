@@ -1,13 +1,13 @@
-# src/load_data.py — alternativa sin fetch
+# src/load_data.py — sin internet, sin errores 403
 import pandas as pd
+from sklearn.datasets import fetch_california_housing
 import os
 
 def download_data():
     os.makedirs('data', exist_ok=True)
-    
-    url = "https://raw.githubusercontent.com/ageron/handson-ml2/master/datasets/housing/housing.csv"
-    df = pd.read_csv(url)
-    df = df.drop(columns=['ocean_proximity'])
+    dataset = fetch_california_housing()
+    df = pd.DataFrame(dataset.data, columns=dataset.feature_names)
+    df['MedHouseVal'] = dataset.target
     df.to_csv('data/housing.csv', index=False)
     print(f'Dataset guardado: {df.shape[0]} filas, {df.shape[1]} columnas')
 

@@ -24,8 +24,8 @@ def run_training(args):
 	run_name = args.run_name or f'RF_n{args.n_estimators}_d{args.max_depth}'
 	# Cargar datos
 	df = pd.read_csv('data/housing.csv')
-	X = df.drop(columns=['median_house_value'])
-	y = df['median_house_value']
+	X = df.drop(columns=['MedHouseVal'])
+	y = df['MedHouseVal']
 	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 	
 	with mlflow.start_run(run_name=run_name):

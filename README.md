@@ -42,8 +42,9 @@ venv/
 __pycache__/
 *.py[cod]
 
-# Datos y Modelos (serán gestionados por DVC)
-models/
+# Datos (gestionado por DVC)
+models/.pkl
+models/.joblib
 
 # MLflow local
 mlruns/

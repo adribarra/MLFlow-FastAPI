@@ -180,6 +180,25 @@ Respuesta:
 {"predicted_value":0.854,"predicted_price_usd":"$85,401"}
 ```
 
-El modelo predice un precio mucho mas alto para la zona costera de ingreso alto que para el barrio interior de ingreso bajo. Esa diferencia coherente con la realidad es la demostración de que el modelo ha aprendido algo útil.
+El modelo predice un precio mucho más alto para la zona costera de ingreso alto que para el barrio interior de ingreso bajo. Esa diferencia coherente con la realidad es la demostración de que el modelo ha aprendido algo útil.
 
 Las predicciones son coherentes con el conocimiento del dominio (los precios en la costa de California son mucho más altos que en el interior).
+
+## Estructura final del proyecto
+
+```
+MLFlow-FastAPI/
+├── data/
+│   ├── housing.csv          # dataset (versionado por DVC)
+│   └── housing.csv.dvc
+├── src/
+│   ├── load_data.py         # descarga y guarda el CSV
+│   ├── train.py             # entrenamiento + logging MLflow
+│   └── api.py               # servidor FastAPI
+├── notebooks/
+│   └── CaliforniaHousing_EDA.ipynb  # EDA del dataset
+├── .dvcignore
+├── .gitignore
+└── README.md
+```
+

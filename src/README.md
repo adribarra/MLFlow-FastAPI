@@ -8,6 +8,12 @@ Output:
 ```
 Dataset guardado: 20640 filas, 9 columnas
 ```
+Versionamos con DVC:
+```
+dvc add data/housing.csv
+git add data/housing.csv.dvc data/.gitignore
+git commit -m 'Dataset California Housing'
+```
 
 ## Script de entrenamiento
 Este es el nucleo de la práctica. El script acepta 'n_estimators' como argumento para poder lanzar varios experimentos con distinto valor y compararlos en MLflow.\

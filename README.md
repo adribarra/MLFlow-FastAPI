@@ -19,7 +19,7 @@ Usaremos el dataset de California Housing incluido en scikit-learn. Tiene 20,640
 En este Jupyter Notebook está el EDA que realicé para revisar su estructura y confirmar factores extras como distribución o correlaciones importantes. 
 
 ## Paso 0
-Esta práctica asume que ya se tiene instalado WSL2 con Ubuntu y Miniconda. Si no se han completado esos pasos, en [este repositorio](github.com/adribarra/MLOpsMioti) están las instrucciones 
+Esta práctica asume que ya se tiene instalado WSL2 con Ubuntu y Miniconda. Si no se han completado esos pasos, en [este repositorio](https://github.com/adribarra/MLOpsMioti) están las instrucciones 
 
 Una vez completado los pasos anteriores, inicializamos nuestro ambiente virtual:
 ```
@@ -43,7 +43,6 @@ __pycache__/
 *.py[cod]
 
 # Datos y Modelos (serán gestionados por DVC)
-data/
 models/
 
 # MLflow local
@@ -79,7 +78,7 @@ Después del análisis del dataset, pasamos a cargar los datos y versionar con D
 (Ver carpeta de [src](https://github.com/adribarra/MLFlow-FastAPI/tree/main/src) para ver los pasos a seguir)
 
 ## Paso 3
-Lanzamos tres experimentos variando n_estimators. Cada ejecución queda registrada en MLflow con sus parametros y métricas.
+Después de crear el [script de entrenamiento](https://github.com/adribarra/MLFlow-FastAPI/blob/main/src/README.md#script-de-entrenamiento), lanzamos tres experimentos variando n_estimators. Cada ejecución queda registrada en MLflow con sus parametros y métricas.
 ```
 # Experimento 1:
 python src/train.py --n_estimators 50 --max_depth 10 --run_name 'RF_50_arboles'
@@ -97,7 +96,7 @@ Al terminar los tres, ir a la interfaz de MLflow, seleccionar el experimento Cal
 
 La línea azul (n_estimators=200) va hacia abajo a la derecha → RMSE más bajo (0.54327), es el mejor modelo.
 La línea roja y amarilla (n_estimators=50 y 100) van hacia arriba → RMSE más alto (0.54450-0.54515).
-Los tres experimentos con n_estimators=50, 100 y 200 mostraron diferencias de RMSE inferiores a 130 dólares, lo que indica que el modelo converge con pocos árboles en este dataset. Para ver diferencias más significativas podría variar max_depth, para ver si hay un impacto mayor en el RMSE.
+Los tres experimentos con n_estimators=50, 100 y 200 mostraron diferencias de RMSE inferiores a 190 dólares, lo que indica que el modelo converge con pocos árboles en este dataset. Para ver diferencias más significativas podría variar max_depth, para ver si hay un impacto mayor en el RMSE.
 
 ```
 python src/train.py --n_estimators 100 --max_depth  3 --run_name 'RF_depth3'
@@ -106,11 +105,11 @@ python src/train.py --n_estimators 100 --max_depth 20 --run_name 'RF_depth20'
 ```
 <img width="1134" height="567" alt="image" src="https://github.com/user-attachments/assets/2c93d300-02db-4984-abb9-948fecc909bd" />
 
-Con esto podemos identificar que max_depth es el parámetro crítico. Aumentar max_depth de 3 a 20 redujo el RMSE en más de 30.000 dólares, mientras que variar n_estimators apenas tuvo impacto. 
+Con esto podemos identificar que max_depth es el parámetro crítico. Aumentar max_depth de 3 a 20 redujo el RMSE en más de 27.000 dólares, mientras que variar n_estimators apenas tuvo impacto. 
 En este caso, el modelo óptimo fue n_estimators=100, max_depth=20.
 
 ## Cierre
-Volver a la carpeta de [src](https://github.com/adribarra/MLFlow-FastAPI/tree/main/src) e ir al paso de la creación de src/api.py en caso de no haber sido creado todavía.
+Volver a la carpeta de [src](https://github.com/adribarra/MLFlow-FastAPI/tree/main/src) e ir al paso de la creación de src/api.py en caso de no haber sido creado todavía.\
 Arrancar la API:
 ```
 uvicorn src.api:app --host 0.0.0.0 --port 8000 --reload
@@ -180,3 +179,7 @@ Respuesta:
 ```
 {"predicted_value":0.854,"predicted_price_usd":"$85,401"}
 ```
+
+El modelo predice un precio mucho mas alto para la zona costera de ingreso alto que para el barrio interior de ingreso bajo. Esa diferencia coherente con la realidad es la demostración de que el modelo ha aprendido algo útil.
+
+Las predicciones son coherentes con el conocimiento del dominio (los precios en la costa de California son mucho más altos que en el interior).

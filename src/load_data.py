@@ -1,4 +1,4 @@
-# src/load_data.py — sin internet, sin errores 403
+# src/load_data.py
 import pandas as pd
 from sklearn.datasets import fetch_california_housing
 import os
